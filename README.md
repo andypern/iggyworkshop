@@ -1,6 +1,6 @@
 # Igneous 101
 
-https://goo.gl/CcVWOR
+https://github.com/andypern/iggyworkshop/
 
 
 ## Overview

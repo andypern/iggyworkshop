@@ -29,9 +29,20 @@ After you complete this lab and associated exercises, you will have experience:
 * Deleting an object
 
 
+
+## grab configs
+
+There is a set of configuration files which will prove useful, namely: it will give you the endpoint_url , access_key , and secret_key which you can use to access a bucket on the system here at NOA.
+
+Go here to download:
+
+https://github.com/andypern/iggyworkshop/tree/master/configs
+
+
+
 ##  Jupyter notebooks
 
-***Note: if you are comfortable editing scripts and launching them from the command line, code snippets are available here:  https://github.com/andypern/iggy/tree/master/workshop/iggy101/advanced**
+***Note: if you are comfortable editing scripts and launching them from the command line, code snippets are available here:  https://github.com/andypern/iggy/tree/master/workshop/iggy101/advanced***
 
 Jupyter notebook (the successor to Ipython notebook) enables you to easily get started running and editing python scripts right in your web browser.
 
@@ -60,7 +71,8 @@ Once you have launched Jupyter notebook, it should launch a web browser pointing
 
 * ***By default on Windows, it will launch into
 `C:\Users\%username%\Documents`***
-* ***By default on mac & linux, it will launch into the folder where your terminal session was (pwd/cwd)***
+
+***By default on mac & linux, it will launch into the folder where your terminal session was (pwd/cwd)***
 
 
 ### Create a folder for your projects
@@ -116,6 +128,11 @@ When you want to execute a `code` cell, simply click anywhere inside of it, and 
 ## Working through the lab
 
 Now that you have everything setup, you're ready to go through the lab.  If you get stuck, waive your lab instructor down and they will help get you going.
+
+## Troubleshooting and gotchya's in jupyter_execute
+
+1.  All variables are globally scoped, even across paragraphs.  This can wreak havoc if you aren't careful.
+2.  If you want to blow away all your variable values, go to the `Kernel` menu, and choose
 
 ## Additional exercises
 

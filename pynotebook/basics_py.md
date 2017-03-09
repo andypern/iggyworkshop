@@ -418,12 +418,12 @@ Now, lets identify a file to upload:
 
 ```python
 '''
-Whatever file you upload must live on your desktop for simplicity sake
+Whatever file you upload must live on your desktop for simplicity sake. Lets list out 10 files that live there..
 '''
 
 homedir = os.path.expanduser('~')
 desktop = os.path.join(homedir,'Desktop')
-print os.listdir(desktop)
+print "\n".join(os.listdir(desktop)[0:10]
 
 #uncomment the following line and put in the name of a file that exists on  your desktop
 #myFile = "photo.jpg"
