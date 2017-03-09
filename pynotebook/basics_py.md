@@ -50,8 +50,8 @@ You'll need to input a few things in order to get started.
 
 
 ```python
-access_key=''
-secret_key=''
+#access_key='X3WGHCWSBQJOYZPJIUGK'
+#secret_key='cUrIvzglhmyrZP5N0mL24sIg6P/aX0Wk+/Yrkz/z'
 endpoint_url='http://some.host.or.ip:7070'
 use_ssl = False
 
