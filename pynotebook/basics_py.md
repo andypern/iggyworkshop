@@ -24,6 +24,7 @@ import boto3
 import botocore
 from boto3.s3.transfer import S3Transfer
 import tempfile
+import pprint
 
 import botocore.utils as boto_utils
 
@@ -175,6 +176,7 @@ Now, call it.  You will first have to define the bucket you want to list though,
 
 ```python
 
+#uncomment following line and put proper bucket in
 #myBucket='mybucket'
 objList = list_objects(client, myBucket)
 
@@ -226,7 +228,6 @@ def put_object(client, bucket, objKey, TEST_TEXT):
         Key=objKey
     )
 
-    # Return the object's version
     return put_resp
 
 print "put_object function defined"
@@ -237,6 +238,7 @@ In order to run it, we'll call it and pass it some variables & objects that we g
 If it runs successfully, you should see a JSON printout of some metadata associated with the object & request.
 
 ```python
+#uncomment following line and make up a filename
 #keyName = "tempfile"
 objKey = objPrefix + keyName
 put_object(client,myBucket,objKey,TEST_TEXT)
@@ -346,7 +348,7 @@ Next, lets actually run it:
 ```python
 
 objMeta = head_object(client, myBucket, objKey)
-print objMeta
+pprint.pprint(objMeta)
 
 ```
 
@@ -392,7 +394,7 @@ If you got no errors, do another HEAD on the object and see what we get:
 
 ```python
 objMeta = head_object(client, myBucket, objKey)
-print objMeta
+pprint.pprint(objMeta)
 
 ```
 ## Upload a file
@@ -420,6 +422,7 @@ Whatever file you upload must live on your desktop for simplicity sake
 homedir = os.path.expanduser('~')
 desktop = os.path.join(homedir,'Desktop')
 
+#uncomment the following line and put in the name of a file that exists on  your desktop
 #myFile = "photo.jpg"
 fileName = os.path.join(desktop,myFile)
 fileTest = os.path.isfile(fileName)
@@ -437,7 +440,7 @@ Now, upload the file:
 objKey = objPrefix + myFile
 upload_file(client,myBucket,objKey,fileName,metaDict)
 uploadMeta = head_object(client,myBucket,objKey)
-print uploadMeta
+pprint.pprint(uploadMeta)
 ```
 
 
