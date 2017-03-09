@@ -20,9 +20,12 @@ After you complete this lab and associated exercises, you will have experience:
 * Setting up a connection constructor
 * Listing buckets/containers
 * Listing objects/Keys within a bucket
-* Putting a file
+* Listing objects with a specific key prefix
+* Putting an object
 * Getting a file
 * Getting metadata about an object
+* Adding additional metadata to an object
+* Uploading a file from your computer
 * Deleting an object
 
 

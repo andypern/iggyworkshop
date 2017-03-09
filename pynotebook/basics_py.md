@@ -51,7 +51,7 @@ You'll need to input a few things in order to get started.
 ```python
 access_key=''
 secret_key=''
-endpoint_url='http://10.1.66.107:7070'
+endpoint_url='http://some.host.or.ip:7070'
 use_ssl = False
 
 
@@ -475,5 +475,5 @@ well, what if you want to run all of this, at once?
 
 If you were able to run each step piece-meal above without any errors, you should now be able to go to the top of your browser and :
 
-1.  Click the `Cell` menu
-2.  Click `Run all`
+1.  Click the `Kernel` menu
+2.  Click `Restart and run all`

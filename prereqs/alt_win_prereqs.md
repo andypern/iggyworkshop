@@ -1,34 +1,33 @@
-# Windows pre-requisites
+# Alternate Windows pre-requisites
 
 
-Note that this document was written and tested with Windows7 , but should work with Windows10 also.
-
+This is an alternate, in case downloading the full anaconda package was not working for you.
 
 ## Getting Python installed
 
-1.  Grab the Anaconda installer for python 2.7:
+1.  Download and install the Microsoft VC++ Compiler for Python 2.7: http://aka.ms/vcpython27
+2.  Grab the *Mini* Conda installer for python 2.7:
 
-* [32-bit version](https://repo.continuum.io/archive/Anaconda2-4.3.0.1-Windows-x86.exe)
-* [64-bit version](https://repo.continuum.io/archive/Anaconda2-4.3.0.1-Windows-x86_64.exe)
-2.  Select `All users (requires admin privileges)` .  If you do not have admin privileges, choose the `Just Me` option, however you will need to adjust some folder paths in later instructions.  
+* [32-bit version](https://repo.continuum.io/miniconda/Miniconda2-latest-Windows-x86.exe)
+* [64-bit version](https://repo.continuum.io/miniconda/Miniconda2-latest-Windows-x86_64.exe)
+3.  Select `All users (requires admin privileges)` .  If you do not have admin privileges, choose the `Just Me` option, however you will need to adjust some folder paths in later instructions.  
 
-3.  Make sure on the 'Advanced Installation Options' page you leave both boxes Checked as shown below:
+4.  Make sure on the 'Advanced Installation Options' page you leave both boxes Checked as shown below:
 
 	![image](../pics/win_anaconda_install_opts.png)
 
 	*Note: this may take several minutes to install*
 
-3.  Once its installed, you should see an 'Anaconda2' folder in your Start menu under 'All Programs':
+5.  Once its installed, you should see an 'Anaconda2' folder in your Start menu under 'All Programs'
 
-	![image](../pics/windows_anaconda_startmenu.png)
 
-4.  To verify all is well, click on the 'Anaconda Prompt' icon, which should launch a command window.  Type the following into it:
+6.  To verify all is well, click on the 'Anaconda Prompt' icon, which should launch a command window.  Type the following into it:
 
 		python --version
 
 You should see something similar to:
 
-	Python 2.7.12 :: Anaconda 4.1.1 (64-bit)
+	Python 2.7.13 :: Continuum Analytics Inc
 
 ## Getting python modules & dependancies
 
@@ -44,20 +43,29 @@ There are a few ways to get python modules installed in Windows, the simplest is
 
 		Successfully installed boto3-1.4.0 botocore-1.4.43 jmespath-0.9.0 s3transfer-0.1.1
 
-3.  For a final check, go ahead and launch `All Programs -> Anaconda2 -> Ipython` , which should give you a window which looks like this:
+3.  From the same prompt window, type:
 
-	![image](../pics/win_ipython_blank.png)
+		pip install jupyter
 
-4.  In that window, type the following and hit the `<enter>` key:
+
+4.  Make sure that you can get jupyter notebok to run.  In the same prompt window:
+
+		jupyter notebook
+
+	It should launch a web browser to a notebook page, if it does, you can move those windows to the side, you'll be using them later.
+
+
+5.  For a final check, launch another `Anaconda Prompt` window.  In that window, type the following and hit the `<enter>` key:
 
 		import boto3
 	If all is well, you will not get any output to the screen.  This means that the boto3 library was successfully installed and is able to be loaded into the Python environment.
 
 
+
 You have now got python and dependancies setup and installed on Windows!
 
 
-## S3cmd setup
+## (Optional) S3cmd setup
 
 1.  Download the latest zip file from [here](https://github.com/s3tools/s3cmd/archive/master.zip)
 2.  Find the file you downloaded in Windows Explorer (usually in `Downloads`), right click, then `Extract all` .  Make sure to change the path to `c:\s3cmd`
