@@ -85,10 +85,12 @@ This will create a folder called `Untitled Folder`
 1.  In a new web browser window or tab, open [basics.ipynb](https://raw.githubusercontent.com/andypern/iggyworkshop/master/pynotebook/basics.ipynb)
 
 2.  Once you land on the page, click `File -> Save as` in your browser, and navigate to the folder you created.  `Windows users` make sure to change the file type to `All files` , and ensure that the filename is `basics.ipynb` , without any additional extensions.
+***Be sure that you save it exactly as basics.ipnyb , removing any '.txt' extensions from the end***
 
 ![image](../pics/notebook_saveas.png)
 
 3.  Go back to your `Jupyter Notebook` browser/tab , and hit the `Refresh` button.  You should now see `basics.ipynb` show up.
+***If it has any additional extensions after .ipynb , you will need to rename the file to remove them***
 
 ![image](../pics/jupyter_basics_refresh.png)
 

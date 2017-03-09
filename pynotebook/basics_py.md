@@ -36,7 +36,7 @@ print "imported modules"
 
 ## Instantiate variables
 You'll need to input a few things in order to get started.  
-'bucket': This is your target bucket, similar to a filesystem directory without the hierarchy. In the Igneous User Interface, buckets are referred to as containers.   
+'bucket': This is your target bucket, similar to a filesystem directory without the hierarchy.    
 
 **'access_key'**: The access key which identifies who you are to the server.  You can obtain this from your IT administrator.  This is similar to a ‘username’.
 
@@ -139,7 +139,7 @@ Now call it, and see what prints out:
 bucket_list = list_buckets(client)
 
 for bucketEntry in bucket_list:
-	print bucketEntry
+    print bucketEntry
 
 ```
 
@@ -209,7 +209,7 @@ First you'll set a variable to hold some text:
 
 ```python
 
-TEST_TEXT = ('Nintendo is an awesome place!  Switch is the best thing since and before sliced bread!')
+TEST_TEXT = ('Nintendo is an awesome place!  Switch and Breath of the Wild are the best things since and before sliced bread!')
 
 print TEST_TEXT
 ```
@@ -264,8 +264,10 @@ def list_my_objects(client, bucket,objPrefix):
 
     lsb_resp = client.list_objects(
         Bucket=bucket,
-		Prefix=objPrefix) #notice this additional parameter
+        Prefix=objPrefix) #notice this additional parameter
 
+    if not lsb_resp.has_key('Contents'):
+        return
     for obj in lsb_resp['Contents']:
         yield obj['Key']
 
@@ -328,16 +330,16 @@ First, define the function:
 ```python
 
 def head_object(client, bucket,objKey):
-	try:
-		response = client.head_object(
-			Bucket=bucket,
-			Key=objKey)
-		return response
+    try:
+        response = client.head_object(
+            Bucket=bucket,
+            Key=objKey)
+        return response
 
-	except botocore.exceptions.ClientError as e:
-		error_code = int(e.response['Error']['Code'])
-		#print error_code
-		return "failed: %s" %(error_code)
+    except botocore.exceptions.ClientError as e:
+        error_code = int(e.response['Error']['Code'])
+        #print error_code
+        return "failed: %s" %(error_code)
 
 print "defined head_object function"
 
@@ -367,7 +369,7 @@ def put_object_with_metadata(client, bucket, objKey,metaDict):
         Body=TEST_TEXT,
         Bucket=bucket,
         Key=objKey,
-		Metadata = metaDict
+        Metadata = metaDict
     )
 
     # Return the object's version
@@ -381,9 +383,9 @@ Perform the put, first defining some metadata.  Feel free to add or change as ma
 ```python
 
 metaDict = {
-	"username" : getpass.getuser(),
-	"job" : "superhero",
-	"location" : "marioworld"
+    "username" : getpass.getuser(),
+    "job" : "superhero",
+    "location" : "marioworld"
 }
 
 put_object_with_metadata(client,myBucket,objKey,metaDict)
@@ -405,9 +407,9 @@ First, create a function to upload a file, note that its slightly different than
 
 ```python
 def upload_file(client,bucket,objKey,fileName,metaDict):
-	transfer = S3Transfer(client)
-	transfer.upload_file(fileName, bucket, objKey,
-	extra_args={'Metadata': metaDict})
+    transfer = S3Transfer(client)
+    transfer.upload_file(fileName, bucket, objKey,
+    extra_args={'Metadata': metaDict})
 
 print "defined upload_file function"
 ```
@@ -421,6 +423,7 @@ Whatever file you upload must live on your desktop for simplicity sake
 
 homedir = os.path.expanduser('~')
 desktop = os.path.join(homedir,'Desktop')
+print os.listdir(desktop)
 
 #uncomment the following line and put in the name of a file that exists on  your desktop
 #myFile = "photo.jpg"
@@ -442,6 +445,21 @@ upload_file(client,myBucket,objKey,fileName,metaDict)
 uploadMeta = head_object(client,myBucket,objKey)
 pprint.pprint(uploadMeta)
 ```
+## Relist to see everyone's work ..
+
+Lets see what your colleague's have been up to..
+
+```python
+
+#uncomment following line and put proper bucket in
+#myBucket='mybucket'
+objList = list_objects(client, myBucket)
+
+for listKey in objList:
+    print listKey
+
+```
+
 
 
 ## Delete object

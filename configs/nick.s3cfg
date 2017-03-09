@@ -1,0 +1,8 @@
+[default]
+access_key = W9ZVTI9SB4APL4P5BNWK
+secret_key = sPOsPbrP4U9rsKjO5pXA/cJoWZrDRJ/TrzjOUBGt
+host_base = 52.32.168.241:7070
+host_bucket = nkirsch
+use_https = False
+signature_v2 = True
+multipart_chunk_size_mb = 15
