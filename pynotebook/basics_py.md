@@ -22,6 +22,7 @@ import getpass
 import os.path
 import boto3
 import botocore
+from boto3.s3.transfer import S3Transfer
 import tempfile
 
 import botocore.utils as boto_utils
@@ -78,16 +79,16 @@ print "session function created"
 Once we have the session object, Here's how to create a connection constructor.  Note that we're calling the 'boto3_session' function from within the boto3_s3_client function.
 
 ```python
-def boto3_s3_client(access_key, secret_key, endpoint_url):
+def boto3_s3_client(aKey, sKey, endpoint):
 
     # Create a session and then a client from it.
-    session = boto3_session(access_key, secret_key)
+    session = boto3_session(aKey, sKey)
     client = session.client(
         's3',
         region_name='iggy-1',
         use_ssl=False,
         verify=False,
-        endpoint_url=endpoint_url,
+        endpoint_url=endpoint,
         config=boto3.session.Config(
             signature_version='s3',
             s3={
@@ -123,9 +124,12 @@ def list_buckets(client):
     # http://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.list_buckets
     lsb_resp = client.list_buckets()
 
-    for bucket in lsb_resp['Buckets']:
-        yield bucket['Name']
+    for thisBucket in lsb_resp['Buckets']:
+        yield thisBucket['Name']
+print "defined list_buckets function"
+
 ```
+
 
 Now call it, and see what prints out:
 
@@ -133,8 +137,8 @@ Now call it, and see what prints out:
 
 bucket_list = list_buckets(client)
 
-for bucket in bucket_list:
-    print bucket
+for bucketEntry in bucket_list:
+	print bucketEntry
 
 ```
 
@@ -171,8 +175,8 @@ Now, call it.  You will first have to define the bucket you want to list though,
 
 ```python
 
-#bucket='mybucket'
-objList = list_objects(client, bucket)
+#myBucket='mybucket'
+objList = list_objects(client, myBucket)
 
 for listKey in objList:
     print listKey
@@ -235,7 +239,7 @@ If it runs successfully, you should see a JSON printout of some metadata associa
 ```python
 #keyName = "tempfile"
 objKey = objPrefix + keyName
-put_object(client,bucket,objKey,TEST_TEXT)
+put_object(client,myBucket,objKey,TEST_TEXT)
 
 ```
 
@@ -271,7 +275,7 @@ Now lets give it a whirl...you should only see what you put:
 
 ```python
 
-myObjList = list_my_objects(client, bucket,objPrefix)
+myObjList = list_my_objects(client, myBucket,objPrefix)
 
 for myObjKey in myObjList:
     print myObjKey
@@ -296,14 +300,17 @@ def get_object(client, bucket, objKey):
         Key=objKey)
 
     return get_resp['Body']
+
+print "defined get_object function"
 ```
+
 
 
 Now call it, specifying the key name (that we defined when we did the put).  
 
 ```python
 
-objContents = get_object(client, bucket, objKey)
+objContents = get_object(client, myBucket, objKey)
 print objContents.read()
 
 
@@ -323,7 +330,7 @@ def head_object(client, bucket,objKey):
 		response = client.head_object(
 			Bucket=bucket,
 			Key=objKey)
-        return response
+		return response
 
 	except botocore.exceptions.ClientError as e:
 		error_code = int(e.response['Error']['Code'])
@@ -338,7 +345,7 @@ Next, lets actually run it:
 
 ```python
 
-objMeta = head_object(client, bucket, objKey)
+objMeta = head_object(client, myBucket, objKey)
 print objMeta
 
 ```
@@ -350,7 +357,7 @@ One of the cool things about an objectStore is that you can add custom metadata 
 Define a customized function:
 
 ```python
-def put_object_with_metadata(client, bucket, objKey, TEST_TEXT,metaDict):
+def put_object_with_metadata(client, bucket, objKey,metaDict):
 
     # See the following URL for more details about this call:
     # http://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.put_object
@@ -377,14 +384,14 @@ metaDict = {
 	"location" : "marioworld"
 }
 
-put_object_with_metadata(client,bucket,objKey,metaDict)
+put_object_with_metadata(client,myBucket,objKey,metaDict)
 
 ```
 
 If you got no errors, do another HEAD on the object and see what we get:
 
 ```python
-objMeta = head_object(client, bucket, objKey)
+objMeta = head_object(client, myBucket, objKey)
 print objMeta
 
 ```
@@ -396,9 +403,10 @@ First, create a function to upload a file, note that its slightly different than
 
 ```python
 def upload_file(client,bucket,objKey,fileName,metaDict):
-	client.upload_file(fileName, 's3container', fileName,
-				extra_args={'Metadata': metaDict},
-				callback=ProgressPercentage(fileName))
+	transfer = S3Transfer(client)
+	transfer.upload_file(fileName, bucket, objKey,
+	extra_args={'Metadata': metaDict})
+
 print "defined upload_file function"
 ```
 
@@ -419,7 +427,19 @@ print fileTest
 
 ```
 
+
 If that returned `True` , you are good to proceed.  If it returned `False` , make sure `myFile` is actually a filename which lives on your desktop, and be sure to include the file extension.
+
+Now, upload the file:
+
+```python
+
+objKey = objPrefix + myFile
+upload_file(client,myBucket,objKey,fileName,metaDict)
+uploadMeta = head_object(client,myBucket,objKey)
+print uploadMeta
+```
+
 
 ## Delete object
 
@@ -437,6 +457,7 @@ def delete_object(client, bucket, objKey):
         Key=objKey)
 
     return get_resp
+print "defined delete_object function"
 ```
 
 
@@ -444,7 +465,7 @@ Now, actually call it
 
 ```python
 
-delete_response = delete_object(client, bucket, objKey)
+delete_response = delete_object(client, myBucket, objKey)
 print delete_response
 ```
 
