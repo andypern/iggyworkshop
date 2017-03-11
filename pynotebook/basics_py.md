@@ -423,7 +423,7 @@ Whatever file you upload must live on your desktop for simplicity sake. Lets lis
 
 homedir = os.path.expanduser('~')
 desktop = os.path.join(homedir,'Desktop')
-print "\n".join(os.listdir(desktop)[0:10]
+print "\n".join(os.listdir(desktop)[0:10])
 
 #uncomment the following line and put in the name of a file that exists on  your desktop
 #myFile = "photo.jpg"
